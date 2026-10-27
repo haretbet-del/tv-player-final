@@ -29,22 +29,19 @@ jobs:
           cache: true
 
       - name: Recreate Android folder and Install dependencies
-        working-directory: iptv_player_flutter
         run: |
           flutter create . --platforms=android
           flutter pub get
 
       - name: Analyze code (не блокирует сборку)
-        working-directory: iptv_player_flutter
         run: flutter analyze || true
 
       - name: Build release APK
-        working-directory: iptv_player_flutter
         run: flutter build apk --release --split-per-abi
 
       - name: Upload APKs as artifact
         uses: actions/upload-artifact@v4
         with:
           name: iptv-player-apk
-          path: iptv_player_flutter/build/app/outputs/flutter-apk/*.apk
+          path: build/app/outputs/flutter-apk/*.apk
           retention-days: 30
